@@ -17,7 +17,7 @@ pipeline {
     stage('Build war') {
       steps {
         sh 'mvn clean package'
-        sh 'docker build -f test10/Dockerfile_app -t app_boxfuse:1.0.0 .'
+        sh 'docker build -f Dockerfile_app -t app_boxfuse:1.0.0 .'
 
       }
     }
