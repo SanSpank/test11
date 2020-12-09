@@ -1,6 +1,7 @@
 pipeline {
   environment {
     registryCredential = 'nexus_cred_id'
+    app = ''
   }
   agent {
 
@@ -22,6 +23,7 @@ pipeline {
       steps {
         sh 'mvn clean package'
         sh 'docker build -f Dockerfile_app -t 130.193.36.121:8123/app_boxfuse:1.0.0 .'
+
       }
     }
      stage('Deploy Image') {
@@ -29,7 +31,8 @@ pipeline {
         script {
             docker.withRegistry('http://130.193.36.121:8123', 'nexus_cred_id')
            {
-            dockerImage.push("130.193.36.121:8123/app_boxfuse:1.0.0")
+            app = '130.193.36.121:8123/app_boxfuse'
+            app.push("1.0.0")
 
           }
         }
