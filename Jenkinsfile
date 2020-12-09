@@ -14,7 +14,8 @@ pipeline {
         git(url: 'https://github.com/SanSpank/test10.git', branch: 'master')
       }
     }
-    stage('Preparation') {
+
+    stage('Build war') {
         withCredentials([
                 usernamePassword(
                         credentialsId: params.nexus_cred,
@@ -22,13 +23,10 @@ pipeline {
                         usernameVariable: 'username_nexus'
                 )
         ])
-    {
+        {
      nexusUser = "${username_nexus}"
      nexusPass = "${pass_nexus}"
     }
-    }
-
-    stage('Build war') {
       steps {
         sh 'mvn clean package'
         sh 'docker build -f Dockerfile_app -t 130.193.36.121:8123/app_boxfuse:1.0.0 .'
