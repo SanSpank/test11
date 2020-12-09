@@ -18,6 +18,7 @@ pipeline {
       steps {
         sh 'mvn clean package'
         sh 'docker build -f Dockerfile_app -t 130.193.36.121:8123/app_boxfuse:1.0.0 .'
+        sh 'docker login -u admin -p 5555666 130.193.36.121:8123'
         sh 'docker push 130.193.36.121:8123/app_boxfuse:1.0.0'
 
       }
