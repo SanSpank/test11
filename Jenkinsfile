@@ -11,7 +11,7 @@ pipeline {
 
     stage('Build jar') {
       steps {
-        sh 'mvn --version'
+        git(url: 'https://github.com/SanSpank/test10.git', branch: 'master')
       }
     }
   }
