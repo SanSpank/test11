@@ -27,7 +27,7 @@ pipeline {
      stage('Deploy Image') {
       steps{
         script {
-            docker.withRegistry('130.193.36.121:8123', '${registryCredential}')
+            docker.withRegistry('130.193.36.121:8123', 'nexus_cred_id')
            {
             dockerImage.push("130.193.36.121:8123/app_boxfuse:1.0.0")
 
