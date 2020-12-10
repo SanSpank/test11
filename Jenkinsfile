@@ -1,11 +1,8 @@
 pipeline {
-  environment {
-    registryCredential = 'nexus_cred_id'
-  }
   agent {
 
     docker {
-      image '130.193.36.121:8123/builder:1.0.0'
+      image '130.193.36.121:8123/builder:1.0.1'
     }
 
   }
@@ -29,7 +26,6 @@ pipeline {
      stage('Deploy Image') {
       steps{
         withCredentials([usernamePassword(credentialsId: 'nexus_cred_id', passwordVariable: 'PassNexus', usernameVariable: 'UserNexus')]){
-        sh 'sudo chmod 777 /var/run/docker.sock'
         sh 'docker login -u $UserNexus -p $PassNexus 130.193.36.121:8123'
         sh 'docker push 130.193.36.121:8123/app_boxfuse:1.0.0'}
       }
