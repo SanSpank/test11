@@ -19,7 +19,7 @@ pipeline {
       }
     }
 
-    stage('Build war') {
+    stage('Build war and deploy prod image') {
       steps {
         sh 'mvn clean package'
         sh 'docker build -f Dockerfile_app -t 130.193.36.121:8123/app_boxfuse:1.0.0 .'
@@ -29,14 +29,12 @@ pipeline {
 
      stage('Deploy Image') {
       steps{
-        script {
-            docker.withRegistry([credentialsId: 'nexus_cred_id', url: "http://130.193.36.121:8123"]) {
-            def app = '130.193.36.121:8123/app_boxfuse:1.0.0'
-            app.push()
-          }
+        withCredentials([usernamePassword(credentialsId: 'nexus_cred_id', passwordVariable: 'PassNexus', usernameVariable: 'UserNexus')]){
+        sh 'docker login -u $UserNexus -p $PassNexus 130.193.36.121:8123'
+        sh 'docker push 130.193.36.121:8123/app_boxfuse:1.0.0'}
+      }
         }
       }
-    }
 
   }
 }
