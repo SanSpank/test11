@@ -1,7 +1,6 @@
 pipeline {
   environment {
     registryCredential = 'nexus_cred_id'
-    app = ''
   }
   agent {
 
@@ -34,7 +33,6 @@ pipeline {
         sh 'docker push 130.193.36.121:8123/app_boxfuse:1.0.0'}
       }
         }
-      }
 
   }
 }
