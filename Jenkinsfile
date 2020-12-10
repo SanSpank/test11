@@ -26,17 +26,17 @@ pipeline {
 
       }
     }
+
      stage('Deploy Image') {
       steps{
         script {
-            docker.withRegistry('http://130.193.36.121:8123', 'nexus_cred_id')
-           {
-            app = '130.193.36.121:8123/app_boxfuse'
-            app.push("1.0.0")
-
+            docker.withRegistry([credentialsId: 'nexus_cred_id', url: "http://130.193.36.121:8123"]) {
+            def app = '130.193.36.121:8123/app_boxfuse:1.0.0'
+            app.push()
           }
         }
       }
     }
+
   }
 }
